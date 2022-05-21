@@ -2,7 +2,12 @@
    SPDX-License-Identifier: MIT-0 */
 
 locals {
-  tags = var.tags
+  tags = merge(
+    var.tags,
+    {
+      Terraform = true
+    },
+  )
 
   availability_zone_names = slice(sort(data.aws_availability_zones.available.names), 0, var.az_count)
   endpoints               = { for e in var.vpc_endpoints : "com.amazonaws.${var.aws_region}.${e}" => "${e}.${var.aws_region}.amazonaws.com" }

@@ -2,7 +2,12 @@
    SPDX-License-Identifier: MIT-0 */
 
 locals {
-  tags = var.tags
+  tags = merge(
+    var.tags,
+    {
+      Terraform = true
+    },
+  )
 
   aws_org_arn             = data.aws_organizations_organization.main.arn
   availability_zone_names = data.aws_availability_zones.available.names
