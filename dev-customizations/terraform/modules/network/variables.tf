@@ -17,12 +17,12 @@ variable "interface_endpoints" {
 }
 
 variable "tgw_route_table" {
-  description = "TGW route tables for VPC association and propagation"
+  description = "TGW route tables for VPC propagation"
   type        = map(string)
 }
 
 variable "tgw" {
-  description = "TGW route tables for VPC attachment"
+  description = "TGW ID"
   type        = string
 }
 
