@@ -26,6 +26,6 @@ data "aws_ec2_transit_gateway_route_table" "associate" {
   provider = aws.network_hub
   filter {
     name   = "tag:Name"
-    values = ["${var.environment != "prod" ? "dev" : "prod"}"]
+    values = ["${local.config.tgw_route_table_associate}"] #["${var.environment != "prod" ? "dev" : "prod"}"]
   }
 }

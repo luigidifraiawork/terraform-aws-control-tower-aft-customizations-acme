@@ -16,22 +16,26 @@ tags = {
 env_config = {
   dev = {
     network_hub_account_number = ""
-    tgw_route_tables           = ["shared", "dev"]
+    tgw_route_table_associate  = "dev"
+    tgw_route_tables_propagate = ["shared", "dev"]
     root_domain                = "network-dev.internal."
   }
   test = {
     network_hub_account_number = ""
-    tgw_route_tables           = ["shared", "dev"]
+    tgw_route_table_associate  = "dev"
+    tgw_route_tables_propagate = ["shared", "dev"]
     root_domain                = "network-test.internal."
   }
   preprod = {
     network_hub_account_number = ""
-    tgw_route_tables           = ["shared", "dev"]
+    tgw_route_table_associate  = "dev"
+    tgw_route_tables_propagate = ["shared", "dev"]
     root_domain                = "network-preprod.internal."
   }
   prod = {
     network_hub_account_number = ""
-    tgw_route_tables           = ["shared", "prod"]
+    tgw_route_table_associate  = "dev"
+    tgw_route_tables_propagate = ["shared", "dev"]
     root_domain                = "network-prod.internal."
   }
 }

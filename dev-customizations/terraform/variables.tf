@@ -10,7 +10,8 @@ variable "env_config" {
   description = "Map of objects for per environment configuration"
   type = map(object({
     network_hub_account_number = string
-    tgw_route_tables           = list(string)
+    tgw_route_table_associate  = string
+    tgw_route_tables_propagate = list(string)
     root_domain                = string
   }))
 }
