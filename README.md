@@ -1,7 +1,7 @@
-# terraform-aws-control-tower-aft-customizations
+# terraform-aws-control-tower-aft-customizations-acme
 
-Template repository for account provisioning and account updating files via AWS Control Tower AFT.
+Account provisioning and account customization files for Acme Corporation using AWS Control Tower AFT.
 
 ## TL;DR
 
-The material on each branch of this repository corresponds to the customization repos provided as part of the [AFT examples](https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos).
+The material on each branch of this repository corresponds to the customization templates provided as part of the [AFT examples](https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos).
