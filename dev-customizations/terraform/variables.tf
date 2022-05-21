@@ -45,5 +45,5 @@ variable "vpc_name" {
 variable "az_count" {
   description = "Number of availability zones"
   type        = number
-  default     = 2
+  default     = 3
 }
