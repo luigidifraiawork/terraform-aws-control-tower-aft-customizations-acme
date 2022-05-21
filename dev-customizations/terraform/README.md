@@ -93,7 +93,7 @@ Example GitLab HTTP backend for use with GitLab CI.
 
  ![http_backend](images/http_backend.png)
 
-Update network hub account ID in **config.auto.tfvars** per environment.
+Update network hub account ID in **config.auto.tfvars**.
 
  ```terraform
 aws_region                = "eu-west-2"
@@ -101,26 +101,10 @@ vpc_endpoints             = ["s3"]
 centralised_vpc_endpoints = ["ec2", "rds", "sqs", "sns", "ssm", "logs", "ssmmessages", "ec2messages", "autoscaling", "ecs", "athena"]
 
 env_config = {
-  dev = {
-    network_hub_account_number = "<Network_Hub_Account_ID>"
-    tgw_route_tables           = ["shared", "dev"]
-    root_domain                = "network-dev.internal."
-  }
-  test = {
-    network_hub_account_number = "<Network_Hub_Account_ID>"
-    tgw_route_tables           = ["shared", "dev"]
-    root_domain                = "network-test.internal."
-  }
-  preprod = {
-    network_hub_account_number = "<Network_Hub_Account_ID>"
-    tgw_route_tables           = ["shared", "dev"]
-    root_domain                = "network-preprod.internal."
-  }
-  prod = {
-    network_hub_account_number = "<Network_Hub_Account_ID>"
-    tgw_route_tables           = ["shared", "prod"]
-    root_domain                = "network-prod.internal."
-  }
+  network_hub_account_number = "<Network_Hub_Account_ID>"
+  tgw_route_table_associate  = "dev"
+  tgw_route_tables_propagate = ["shared", "dev"]
+  root_domain                = "network-hub.internal."
 }
  ```
 
@@ -134,10 +118,6 @@ When deploying from your local machine having configured the **TF Backend** in t
 
 * ``` terraform init ```
 * ``` terraform validate ```
-* set environment for deployment
-  * ``` export TF_VAR_environment=" **ENV** " ```
-  * ``` Set-Item -Path env:TF_VAR_environment -Value “ **ENV** “ ```
-      (Possible Env values * dev, test, preprod, prod)
 * ``` terraform plan ```
 * ``` terraform apply ``` **or** ``` terraform apply --auto-approve ```
 
@@ -183,8 +163,8 @@ Note that this command will delete all the resources previously created by Terra
 
 | Name | Version |
 |------|---------|
-| aws | 3.71.0 |
-| aws.network\_hub | 3.71.0 |
+| aws | 3.75.2 |
+| aws.network_hub | 3.75.2 |
 
 #### Modules
 
@@ -206,18 +186,24 @@ Note that this command will delete all the resources previously created by Terra
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | AWS region being deployed to | `string` | n/a | yes |
-| centralised\_vpc\_endpoints | Which centralised VPC endpoints to consume | `list(string)` | n/a | yes |
-| env\_config | Map of objects for per environment configuration | <pre>map(object({<br>    network_hub_account_number = string<br>    tgw_route_tables           = list(string)<br>    root_domain                = string<br>  }))</pre> | n/a | yes |
-| environment | Deployment environment passed as argument or environment variable | `string` | n/a | yes |
-| vpc\_endpoints | Which local VPC endpoints to deploy | `list(string)` | n/a | yes |
+| aws_region | AWS region being deployed to | `string` | n/a | yes |
+| az_count | Number of availability zones | `number` | `3` | no |
+| centralised_vpc_endpoints | Which centralised VPC endpoints to consume | `list(string)` | n/a | yes |
+| env_config | Object for environment configuration | <pre>object({<br>    network_hub_account_number = string<br>    tgw_route_table_associate  = string<br>    tgw_route_tables_propagate = list(string)<br>    root_domain                = string<br>  })</pre> | n/a | yes |
+| tags | Default tags to apply to all resources | `map(string)` | n/a | yes |
+| vpc_endpoints | Which local VPC endpoints to deploy | `list(string)` | n/a | yes |
+| vpc_name | Name of the VPC | `string` | `"spoke"` | no |
 
 #### Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| vpc_id | vpc id used for other modules |
+
 <!-- END_TF_DOCS -->
 
 <!-- BEGIN_TF_Network_DOCS -->
+
 #### Requirements
 
 | Name | Version |
@@ -230,7 +216,7 @@ No outputs.
 | Name | Version |
 |------|---------|
 | aws | ~> 3.0 |
-| aws.network\_hub | ~> 3.0 |
+| aws.network_hub | ~> 3.0 |
 
 #### Modules
 
@@ -245,11 +231,13 @@ No modules.
 | [aws_ec2_transit_gateway_route_table_association.env](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_association) | resource |
 | [aws_ec2_transit_gateway_route_table_propagation.org](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_propagation) | resource |
 | [aws_ec2_transit_gateway_vpc_attachment.vpc_endpoint](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_vpc_attachment) | resource |
+| [aws_egress_only_internet_gateway.spoke_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/egress_only_internet_gateway) | resource |
 | [aws_flow_log.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/flow_log) | resource |
 | [aws_iam_role.flow_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.flow_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_kms_key.log_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_route.default_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.default_route_ipv6](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
 | [aws_route53_record.dev-ns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.interface_phz](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_route_table.spoke_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
@@ -260,6 +248,8 @@ No modules.
 | [aws_subnet.app_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.endpoint_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.spoke_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [aws_vpc_dhcp_options.spoke_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options) | resource |
+| [aws_vpc_dhcp_options_association.spoke_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options_association) | resource |
 | [aws_vpc_endpoint.interface](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.policy_kms_logs_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -269,24 +259,26 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | AWS region being deployed to | `string` | n/a | yes |
-| az\_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| environment | Deployment environment passed as argument or environment variable | `string` | n/a | yes |
-| interface\_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
-| network\_hub\_account\_number | Network Hub account ID | `string` | n/a | yes |
+| aws_region | AWS region being deployed to | `string` | n/a | yes |
+| az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
+| interface_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
+| network_hub_account_number | Network Hub account ID | `string` | n/a | yes |
 | tags | default provider tags | `map(string)` | n/a | yes |
-| tgw | TGW route tables for VPC attachment | `string` | n/a | yes |
-| tgw\_association | tgw route table to associate to | `string` | n/a | yes |
-| tgw\_route\_table | TGW route tables for VPC association and propagation | `map(string)` | n/a | yes |
+| tgw | TGW ID | `string` | n/a | yes |
+| tgw_association | tgw route table to associate to | `string` | n/a | yes |
+| tgw_route_table | TGW route tables for VPC propagation | `map(string)` | n/a | yes |
+| vpc_name | Name of the VPC | `string` | `"spoke"` | no |
 
 #### Outputs
 
 | Name | Description |
 |------|-------------|
-| vpc\_id | vpc id used for other modules |
+| vpc_id | vpc id used for other modules |
+
 <!-- END_TF_Network_DOCS -->
 
 <!-- BEGIN_TF_DNS_DOCS -->
+
 #### Requirements
 
 | Name | Version |
@@ -299,7 +291,7 @@ No modules.
 | Name | Version |
 |------|---------|
 | aws | ~> 3.0 |
-| aws.network\_hub | ~> 3.0 |
+| aws.network_hub | ~> 3.0 |
 
 #### Modules
 
@@ -327,15 +319,15 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | AWS region being deployed to | `string` | n/a | yes |
-| centralised\_vpc\_endpoints | Which centralised VPC endpoints to consume | `map(string)` | n/a | yes |
-| environment | Deployment environment passed as argument or environment variable | `string` | n/a | yes |
-| network\_hub\_account\_number | Network Hub account ID | `string` | n/a | yes |
-| root\_domain | rootdomain for the delegated private hosted zone | `string` | n/a | yes |
+| aws_region | AWS region being deployed to | `string` | n/a | yes |
+| centralised_vpc_endpoints | Which centralised VPC endpoints to consume | `map(string)` | n/a | yes |
+| network_hub_account_number | Network Hub account ID | `string` | n/a | yes |
+| root_domain | rootdomain for the delegated private hosted zone | `string` | n/a | yes |
 | tags | default provider tags | `map(string)` | n/a | yes |
-| vpc\_id | vpc id to associate delegated subdomain to | `string` | n/a | yes |
+| vpc_id | vpc id to associate delegated subdomain to | `string` | n/a | yes |
 
 #### Outputs
 
 No outputs.
+
 <!-- END_TF_DNS_DOCS -->

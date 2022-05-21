@@ -47,10 +47,6 @@ resource "aws_route53_resolver_endpoint" "inbound" {
       subnet_id = ip_address.value.id
     }
   }
-
-  tags = {
-    Environment = var.environment
-  }
 }
 resource "aws_route53_resolver_endpoint" "outbound" {
   name      = "Org-Inbound-Resolver-Endpoint"
@@ -67,10 +63,6 @@ resource "aws_route53_resolver_endpoint" "outbound" {
       subnet_id = ip_address.value.id
     }
   }
-
-  tags = {
-    Environment = var.environment
-  }
 }
 
 resource "aws_route53_resolver_rule" "fwd" {
@@ -85,10 +77,6 @@ resource "aws_route53_resolver_rule" "fwd" {
     content {
       ip = target_ip.value.ip
     }
-  }
-
-  tags = {
-    Environment = var.environment
   }
 }
 

@@ -9,7 +9,7 @@ data "aws_ec2_transit_gateway" "org_env" {
   provider = aws.network_hub
   filter {
     name   = "tag:Name"
-    values = ["Org_TGW_${var.environment}"]
+    values = ["org-tgw"]
   }
 }
 
@@ -26,6 +26,6 @@ data "aws_ec2_transit_gateway_route_table" "associate" {
   provider = aws.network_hub
   filter {
     name   = "tag:Name"
-    values = ["${local.config.tgw_route_table_associate}"] #["${var.environment != "prod" ? "dev" : "prod"}"]
+    values = ["${var.env_config.tgw_route_table_associate}"]
   }
 }

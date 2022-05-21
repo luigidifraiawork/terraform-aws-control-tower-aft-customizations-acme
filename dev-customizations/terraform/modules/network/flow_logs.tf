@@ -65,7 +65,7 @@ resource "aws_kms_key" "log_key" {
   enable_key_rotation     = true
   policy                  = data.aws_iam_policy_document.policy_kms_logs_document.json
   tags = {
-    Name = "vpc-flow-logs-${var.environment}"
+    Name = "vpc-flow-logs"
   }
 }
 

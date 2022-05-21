@@ -1,11 +1,6 @@
 /* Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
    SPDX-License-Identifier: MIT-0 */
 
-variable "environment" {
-  description = "Deployment environment passed as argument or environment variable"
-  type        = string
-}
-
 variable "aws_region" {
   description = "AWS region being deployed to"
   type        = string

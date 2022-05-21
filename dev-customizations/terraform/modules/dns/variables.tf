@@ -1,11 +1,6 @@
 /* Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
    SPDX-License-Identifier: MIT-0 */
 
-variable "environment" {
-  description = "Deployment environment passed as argument or environment variable"
-  type        = string
-}
-
 variable "vpc_id" {
   description = "vpc id to associate delegated subdomain to"
   type        = string

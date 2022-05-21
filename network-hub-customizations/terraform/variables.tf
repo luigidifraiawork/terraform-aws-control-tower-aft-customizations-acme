@@ -1,18 +1,13 @@
 /* Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
    SPDX-License-Identifier: MIT-0 */
 
-variable "environment" {
-  description = "Deployment environment passed as argument or environment variable"
-  type        = string
-}
-
 variable "env_config" {
-  description = "Map of objects for per environment configuration"
-  type = map(object({
+  description = "Object for environment configuration"
+  type = object({
     ipam_cidr        = string
     tgw_route_tables = list(string)
     root_domain      = string
-  }))
+  })
 }
 
 variable "aws_region" {

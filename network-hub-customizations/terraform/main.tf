@@ -3,7 +3,7 @@
 
 module "ipam" {
   source     = "./modules/ipam"
-  ipam_cidr  = local.config.ipam_cidr
+  ipam_cidr  = var.env_config.ipam_cidr
   org_arn    = local.aws_org_arn
   aws_region = var.aws_region
 }
@@ -11,11 +11,10 @@ module "ipam" {
 module "tgw" {
   source                = "./modules/tgw"
   inspection_attachment = module.network_firewall_vpc.inspection_attachment
-  tgw_route_tables      = local.config.tgw_route_tables
-  cidr                  = local.config.ipam_cidr
+  tgw_route_tables      = var.env_config.tgw_route_tables
+  cidr                  = var.env_config.ipam_cidr
   az_names              = local.availability_zone_names
   org_arn               = local.aws_org_arn
-  environment           = var.environment
 }
 
 module "vpc_endpoints" {
@@ -25,10 +24,9 @@ module "vpc_endpoints" {
   tgw_route_tables    = module.tgw.tgw_route_table
   tgw                 = module.tgw.tgw
   org_ipam_pool       = module.ipam.org_ipam_pool
-  cidr                = local.config.ipam_cidr
+  cidr                = var.env_config.ipam_cidr
   interface_endpoints = local.endpoints
   az_names            = local.availability_zone_names
-  environment         = var.environment
   depends_on = [
     module.ipam,
     module.tgw
@@ -42,12 +40,11 @@ module "dns" {
   tgw_route_tables    = module.tgw.tgw_route_table
   tgw                 = module.tgw.tgw
   org_ipam_pool       = module.ipam.org_ipam_pool
-  cidr                = local.config.ipam_cidr
-  root_domain         = local.config.root_domain
+  cidr                = var.env_config.ipam_cidr
+  root_domain         = var.env_config.root_domain
   interface_endpoints = local.endpoints
   az_names            = local.availability_zone_names
   org_arn             = local.aws_org_arn
-  environment         = var.environment
   depends_on = [
     module.ipam,
     module.tgw
@@ -61,9 +58,8 @@ module "network_firewall_vpc" {
   tgw_route_tables = module.tgw.tgw_route_table
   tgw              = module.tgw.tgw
   org_ipam_pool    = module.ipam.org_ipam_pool
-  cidr             = local.config.ipam_cidr
+  cidr             = var.env_config.ipam_cidr
   az_names         = local.availability_zone_names
-  environment      = var.environment
   aws_region       = var.aws_region
   depends_on = [
     module.ipam
@@ -71,7 +67,7 @@ module "network_firewall_vpc" {
 }
 
 resource "aws_iam_role" "flow_logs" {
-  name = "${var.environment}_endpoint_vpc_flow_logs"
+  name = "endpoint_vpc_flow_logs"
 
   assume_role_policy = <<EOF
 {
@@ -121,7 +117,7 @@ resource "aws_kms_key" "log_key" {
   enable_key_rotation     = true
   policy                  = data.aws_iam_policy_document.policy_kms_logs_document.json
   tags = {
-    Name = "vpc-flow-logs-${var.environment}"
+    Name = "vpc-flow-logs"
   }
 }
 
