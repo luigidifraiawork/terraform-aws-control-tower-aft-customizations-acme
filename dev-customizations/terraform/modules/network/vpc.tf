@@ -26,12 +26,12 @@ resource "aws_vpc_dhcp_options_association" "spoke_vpc" {
   dhcp_options_id = aws_vpc_dhcp_options.spoke_vpc.id
 }
 
-resource "aws_egress_only_internet_gateway" "spoke_vpc" {
-  vpc_id = aws_vpc.spoke_vpc.id
-  tags = {
-    Name = "${var.vpc_name}_eigw"
-  }
-}
+#resource "aws_egress_only_internet_gateway" "spoke_vpc" {
+#  vpc_id = aws_vpc.spoke_vpc.id
+#  tags = {
+#    Name = "${var.vpc_name}_eigw"
+#  }
+#}
 
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.spoke_vpc.id
@@ -94,6 +94,7 @@ resource "aws_route" "default_route_ipv6" {
   route_table_id              = aws_route_table.spoke_vpc.id
   destination_ipv6_cidr_block = "::/0"
   transit_gateway_id          = var.tgw
+  #egress_only_gateway_id      = aws_egress_only_internet_gateway.spoke_vpc.id
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "env" {

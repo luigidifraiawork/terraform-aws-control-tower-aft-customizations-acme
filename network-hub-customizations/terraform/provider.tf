@@ -8,5 +8,4 @@ terraform {
       version = ">= 4.4.0" # required for https://github.com/hashicorp/terraform-provider-aws/pull/23427
     }
   }
-  required_version = "~> 1.1"
 }
