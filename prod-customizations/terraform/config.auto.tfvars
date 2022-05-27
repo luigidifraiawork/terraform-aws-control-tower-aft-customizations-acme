@@ -34,7 +34,7 @@ env_config = {
   }
   prod = {
     network_hub_account_number = ""
-    tgw_route_table_associate  = "dev"
+    tgw_route_table_associate  = "prod"
     tgw_route_tables_propagate = ["shared"]
     root_domain                = "network-prod.internal."
   }
