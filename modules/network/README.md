@@ -55,7 +55,6 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | aws_region | AWS region being deployed to | `string` | n/a | yes |
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| environment | Deployment environment passed as argument or environment variable | `string` | n/a | yes |
 | interface_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
 | network_hub_account_number | Network Hub account ID | `string` | n/a | yes |
 | tgw | TGW ID | `string` | n/a | yes |

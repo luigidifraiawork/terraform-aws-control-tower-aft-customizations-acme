@@ -197,7 +197,6 @@ Note that this command will delete all the resources previously created by Terra
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 1.1 |
 | aws | >= 4.4.0 |
 
 #### Providers
