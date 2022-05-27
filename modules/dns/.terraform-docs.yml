@@ -3,3 +3,7 @@ formatter: markdown table
 settings:
   anchor: false
   escape: false
+
+output:
+  file: README.md
+  mode: replace
