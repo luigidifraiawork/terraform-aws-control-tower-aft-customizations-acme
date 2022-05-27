@@ -14,6 +14,6 @@ tags = {
 env_config = {
   network_hub_account_number = ""
   tgw_route_table_associate  = "dev"
-  tgw_route_tables_propagate = ["shared", "dev"]
+  tgw_route_tables_propagate = ["shared"]
   root_domain                = "network-hub.internal."
 }

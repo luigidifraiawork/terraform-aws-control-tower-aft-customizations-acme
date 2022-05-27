@@ -12,7 +12,7 @@ variable "interface_endpoints" {
 }
 
 variable "tgw_route_table" {
-  description = "TGW route tables for VPC propagation"
+  description = "TGW route tables for VPC association and propagation"
   type        = map(string)
 }
 
@@ -24,11 +24,6 @@ variable "tgw" {
 variable "aws_region" {
   type        = string
   description = "AWS region being deployed to"
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "default provider tags"
 }
 
 variable "tgw_association" {
