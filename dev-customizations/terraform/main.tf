@@ -2,7 +2,7 @@
    SPDX-License-Identifier: MIT-0 */
 
 module "network" {
-  source                     = "./modules/network"
+  source                     = "../../modules/network"
   az_names                   = local.availability_zone_names
   tgw                        = data.aws_ec2_transit_gateway.org_env.id
   interface_endpoints        = local.endpoints
@@ -16,7 +16,7 @@ module "network" {
 }
 
 module "dns" {
-  source                     = "./modules/dns"
+  source                     = "../../modules/dns"
   environment                = var.environment
   centralised_vpc_endpoints  = local.centralised_endpoints
   vpc_id                     = module.network.vpc_id
