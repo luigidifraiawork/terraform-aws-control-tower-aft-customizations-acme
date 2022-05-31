@@ -18,6 +18,11 @@ module "shared_services_account" {
     change_reason       = "Standard account vending request"
   }
 
+  custom_fields = {
+    custom1 = "a"
+    custom2 = "b"
+  }
+
   account_customizations_name = "shared-services-customizations"
 }
 
@@ -39,6 +44,11 @@ module "network_hub_account" {
   change_management_parameters = {
     change_requested_by = "Acme Corporation"
     change_reason       = "Standard account vending request"
+  }
+
+  custom_fields = {
+    custom1 = "a"
+    custom2 = "b"
   }
 
   account_customizations_name = "network-hub-customizations"
@@ -64,6 +74,11 @@ module "dev_account" {
     change_reason       = "Standard account vending request"
   }
 
+  custom_fields = {
+    custom1 = "a"
+    custom2 = "b"
+  }
+
   account_customizations_name = "dev-customizations"
 }
 
@@ -85,6 +100,11 @@ module "prod_account" {
   change_management_parameters = {
     change_requested_by = "Acme Corporation"
     change_reason       = "Standard account vending request"
+  }
+
+  custom_fields = {
+    custom1 = "a"
+    custom2 = "b"
   }
 
   account_customizations_name = "prod-customizations"
