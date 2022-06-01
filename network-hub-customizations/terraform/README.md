@@ -203,7 +203,7 @@ Note that this command will delete all the resources previously created by Terra
 
 | Name | Version |
 |------|---------|
-| aws | 4.15.1 |
+| aws | >= 4.4.0 |
 
 #### Modules
 
@@ -278,8 +278,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| cidr | corporate cidr range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
-| inspection_attachment | inspection vpc attachment for default route | `string` | n/a | yes |
+| cidr | Corporate CIDR range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
+| inspection_attachment | Inspection VPC attachment for default route | `string` | n/a | yes |
 | org_arn | The ARN of the AWS Organization this account belongs to | `string` | n/a | yes |
 | tgw_route_tables | List of route tables to create for the transit gateway | `list(string)` | n/a | yes |
 
@@ -287,8 +287,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| tgw | tgw id for attachments |
-| tgw_route_table | map of route tables used for association and propagation |
+| tgw | TGW ID for VPC attachments |
+| tgw_route_table | Map of route tables used for association and propagation |
 
 <!-- END_TF_TGW_DOCS -->
 
@@ -389,12 +389,12 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| cidr | corporate cidr range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
-| iam_role_arn | iam role to allow vpc flow logs to write to cloudwatch | `string` | n/a | yes |
-| interface_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
-| kms_key_id | vpc flow logs kms key to encrypt logs | `string` | n/a | yes |
+| cidr | Corporate CIDR range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
+| iam_role_arn | IAM role to allow VPC Flow Logs to write to CloudWatch | `string` | n/a | yes |
+| interface_endpoints | Object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
+| kms_key_id | VPC Flow Logs KMS key to encrypt logs | `string` | n/a | yes |
 | org_ipam_pool | IPAM pool ID to allocate CIDR space | `string` | n/a | yes |
-| tgw | TGW route tables for VPC attachment | `string` | n/a | yes |
+| tgw | TGW ID for VPC attachments | `string` | n/a | yes |
 | tgw_route_tables | TGW route tables for VPC association and propagation | `map(string)` | n/a | yes |
 
 #### Outputs
@@ -457,14 +457,14 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| cidr | corporate cidr range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
-| iam_role_arn | iam role to allow vpc flow logs to write to cloudwatch | `string` | n/a | yes |
-| interface_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
-| kms_key_id | vpc flow logs kms key to encrypt logs | `string` | n/a | yes |
+| cidr | Corporate CIDR range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
+| iam_role_arn | IAM role to allow VPC Flow Logs to write to CloudWatch | `string` | n/a | yes |
+| interface_endpoints | Object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
+| kms_key_id | VPC Flow Logs KMS key to encrypt logs | `string` | n/a | yes |
 | org_arn | The ARN of the AWS Organization this account belongs to | `string` | n/a | yes |
 | org_ipam_pool | IPAM pool ID to allocate CIDR space | `string` | n/a | yes |
-| root_domain | root domain for private hosted zone delegation | `string` | n/a | yes |
-| tgw | TGW route tables for VPC attachment | `string` | n/a | yes |
+| root_domain | Root domain for private hosted zone delegation | `string` | n/a | yes |
+| tgw | TGW ID for VPC attachments | `string` | n/a | yes |
 | tgw_route_tables | TGW route tables for VPC association and propagation | `map(string)` | n/a | yes |
 
 #### Outputs
@@ -539,11 +539,11 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | aws_region | AWS region being deployed to | `string` | n/a | yes |
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| cidr | corporate cidr range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
-| iam_role_arn | iam role to allow vpc flow logs to write to cloudwatch | `string` | n/a | yes |
-| kms_key_id | vpc flow logs kms key to encrypt logs | `string` | n/a | yes |
+| cidr | Corporate CIDR range for use with blackholing traffic between production and development environments | `string` | n/a | yes |
+| iam_role_arn | IAM role to allow VPC Flow Logs to write to CloudWatch | `string` | n/a | yes |
+| kms_key_id | VPC Flow Logs KMS key to encrypt logs | `string` | n/a | yes |
 | org_ipam_pool | IPAM pool ID to allocate CIDR space | `string` | n/a | yes |
-| tgw | TGW route tables for VPC attachment | `string` | n/a | yes |
+| tgw | TGW ID for VPC attachments | `string` | n/a | yes |
 | tgw_route_tables | TGW route tables for VPC association and propagation | `map(string)` | n/a | yes |
 
 #### Outputs
@@ -552,7 +552,7 @@ No modules.
 |------|-------------|
 | eni_map | n/a |
 | firewall_info | Info of network fire for routing |
-| inspection_attachment | inspection tgw attachment id for default route in tgw |
+| inspection_attachment | Inspection TGW attachment ID for default route in TGW |
 | route_table | output route tables used for NFW |
 | rt_map | n/a |
 

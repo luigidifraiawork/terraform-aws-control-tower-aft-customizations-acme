@@ -3,7 +3,7 @@
 
 output "vpc_id" {
   value       = aws_vpc.spoke_vpc.id
-  description = "vpc id used for other modules"
+  description = "VPC ID used for other modules"
 }
 
 output "app_subnet" {

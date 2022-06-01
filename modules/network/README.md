@@ -55,10 +55,10 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | aws_region | AWS region being deployed to | `string` | n/a | yes |
 | az_names | A list of the Availability Zone names available to the account | `list(string)` | n/a | yes |
-| interface_endpoints | object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
+| interface_endpoints | Object representing the region and services to create interface endpoints for | `map(string)` | n/a | yes |
 | network_hub_account_number | Network Hub account ID | `string` | n/a | yes |
-| tgw | TGW ID | `string` | n/a | yes |
-| tgw_association | tgw route table to associate to | `string` | n/a | yes |
+| tgw | TGW ID for VPC attachments | `string` | n/a | yes |
+| tgw_association | TGW route table to associate to | `string` | n/a | yes |
 | tgw_route_table | TGW route tables for VPC association and propagation | `map(string)` | n/a | yes |
 | vpc_name | Name of the VPC | `string` | `"spoke"` | no |
 
@@ -67,5 +67,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | app_subnet | app subnets used for other modules |
-| vpc_id | vpc id used for other modules |
+| vpc_id | VPC ID used for other modules |
 <!-- END_TF_DOCS -->

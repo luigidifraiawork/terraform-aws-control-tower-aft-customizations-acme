@@ -42,8 +42,8 @@ No modules.
 | aws_region | AWS region being deployed to | `string` | n/a | yes |
 | centralised_vpc_endpoints | Which centralised VPC endpoints to consume | `map(string)` | n/a | yes |
 | network_hub_account_number | Network Hub account ID | `string` | n/a | yes |
-| root_domain | rootdomain for the delegated private hosted zone | `string` | n/a | yes |
-| vpc_id | vpc id to associate delegated subdomain to | `string` | n/a | yes |
+| root_domain | Root domain for the delegated private hosted zone | `string` | n/a | yes |
+| vpc_id | VPC ID to associate delegated subdomain to | `string` | n/a | yes |
 
 ## Outputs
 
